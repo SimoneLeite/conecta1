@@ -1,0 +1,153 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilização do body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Header */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo h1 {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo h2 {
+    color: #333;
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: -5px;
+}
+
+/* Navegação */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    color: #007bff;
+}
+
+/* Usuário */
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user p {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Main */
+main {
+    padding: 20px 0;
+}
+
+.event-card {
+    background-color: #f44336; /* Vermelho para o fundo do cartão */
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.event-card img {
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.event-info {
+    padding: 20px;
+    color: #fff;
+}
+
+.event-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.event-info p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.event-info p strong {
+    font-weight: bold;
+}
+
+.Button {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.botao {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #28a745; /* Verde para o botão */
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.botao:hover {
+    background-color: #218838;
+}
+
+/* Responsividade */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+    main {
+        display: flex;
+        justify-content: space-around;
+    }
+}

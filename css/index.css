@@ -1,0 +1,189 @@
+/* Não deixa respiro entre as bordas do site */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(235, 235, 235);
+}
+
+/* Estilo do hero */
+section.hero-site{
+    height: 100vh; /*Essa sessão vai tomar 100% a altura da minha tela*/
+    background-image: url(../imagem/index.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: aliceblue;
+    display: flex;
+    padding-right: 530px;
+}
+
+.hero-site .interface{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.hero-site .txt-hero h1{
+    font-size: 4rem;
+    line-height: 95%;
+    font-weight: 300;
+    letter-spacing: -2px;
+}
+
+.hero-site .txt-hero h1 span{
+    display: block;
+    font-weight: 600;
+}
+
+.hero-site .txt-hero p{
+    font-size: 18px;
+    font-weight: 290;
+    margin: 20px 0;
+}
+
+.hero-site .txt-hero p span{
+    display: block;
+    font-size: 18px;
+    font-weight: 290;
+}
+
+.hero-site button{
+    width: 140px;
+    height: 40px;
+}
+
+/* Estilo das vastagens */
+section.vantagens{
+    padding: 80px 0;
+}
+
+.txt-itens{
+    display: flex;  
+    align-items: center;
+    justify-content: space-between;
+    gap: 10%;
+    margin-bottom: 60px;
+}
+
+.vantagens .itens-container .img-itens img{
+    max-width: 420px;
+}
+
+.vantagens .itens-container .txt-itens h3{
+    font-size: 2.5em;
+    line-height: 48px;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.itens-container .txt-itens h3 span{
+    font-weight: 280;
+}
+
+
+/* Estilo dos botões de contato */
+section.contato{
+    background-color: #fff;
+    padding: 80px 0;
+}
+
+.txt-contato, icons-contato{
+    display: inline-block;
+    width: 50%;
+    margin-right: 1px;
+    vertical-align: middle;
+}
+
+.contato .txt-contato h3{
+    font-size: 2.5em;
+    line-height: 50px;
+    font-weight: 270;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+}
+
+.contato .txt-contato h3 span{
+    display: block;
+    font-weight: 500;
+}
+
+.contato .icons-contato a{
+    text-decoration: none;
+}
+
+.contato .icons-contato button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    width: 40%;
+    height: 70px;
+    margin: 0 auto 20px auto;
+    background-color: transparent;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.contato .icons-contato button i{
+    font-size: 20px;
+}
+
+.contato .icons-contato button:hover{
+    background-color: #000000;
+}
+
+.contato .icons-contato button:hover i, .contato .icons-contato button:hover p{
+    color: #fff;
+}
+
+/* Estilo do rodapé */
+footer{
+    background-color: #6d1818;
+    width: 100%;
+    text-align: center;
+    padding: 40px 0;
+}
+
+footer .top-footer button{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: .5s;
+}
+
+footer .top-footer button:hover{
+    background-color: #fff;
+    color: #000000;
+}
+
+footer .middle-footer{
+    margin: 20px 0;
+}
+
+
+footer .middle-footer a{
+    color: #fff;
+    margin: 0 15px;
+}
+
+footer .botton-footer{
+    border-top: 2px solid #fff;
+}
+
+footer .botton-footer p{
+    color: #fff;
+    margin-top: 10px;
+}
+
