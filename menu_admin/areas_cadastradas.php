@@ -143,7 +143,7 @@ $result = $conn->query($sql);
 </html>
 
 <?php
-// 🛑 Fecha a Conexão com o Banco de Dados
+//  Fecha a Conexão com o Banco de Dados
 $conn->close();
 ?>
 

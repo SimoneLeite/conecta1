@@ -1,159 +1,53 @@
-/* 🌍 Configuração Geral */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
+    margin: 20px;
 }
 
-/* 🏠 Estilização do Cabeçalho */
-header {
-    background-color: #004080;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header img {
-    width: 140px;
-}
-
-/* 🎯 Centralizar Título */
-.title-center {
+h2 {
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #004080;
-    margin: 20px 0;
-}
-
-/* 🔎 Estilização do Campo de Busca */
-.search-container {
-    text-align: center;
-    margin: 15px 0;
-}
-
-.search-input {
-    width: 50%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.search-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* 📋 Estilização da Tabela */
-.table-container {
-    width: 90%;
-    margin: 20px auto;
-    overflow-x: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    color: #333;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    background: #ffffff;
+    margin: 20px auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-    padding: 10px;
-    text-align: center;
+    padding: 12px;
+    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
 th {
-    background: #004080;
+    background: #007bff;
     color: white;
     text-transform: uppercase;
 }
 
+td {
+    background: #f9f9f9;
+}
+
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background: #f1f1f1;
 }
 
-tr:hover {
-    background-color: #e6f7ff;
-}
-
-/* 📂 Estilo para Link de Download */
 a {
+    color: #007bff;
     text-decoration: none;
-    font-weight: bold;
 }
 
-a[download] {
-    color: #004080;
-}
-
-a[download]:hover {
-    color: #002d5a;
+a:hover {
     text-decoration: underline;
 }
 
-/* 🎨 Estilização dos Botões */
-.button-container {
-    text-align: left;
-    margin: 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
-
-/* 🔙 Botão Voltar */
-.btn-back {
-    background-color: #6c757d;
-}
-
-.btn-back:hover {
-    background-color: #545b62;
-}
-
-/* 💾 Botão Baixar */
-.btn-download {
-    background-color: #007bff;
-}
-
-.btn-download:hover {
-    background-color: #0056b3;
-}
-
-/* 📱 Responsividade */
-@media (max-width: 768px) {
-    .search-input {
-        width: 80%;
-    }
-
-    .table-container {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
 
 
 

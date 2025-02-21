@@ -4,31 +4,38 @@ $username = "root";
 $password = "";
 $dbname = "fatecconecta";
 
-// Conexão com o banco de dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Consulta para buscar os projetos com nomes das áreas, alunos e eventos
+// Consulta para listar os projetos e exibir os nomes dos alunos
 $sql = "
     SELECT 
-        projeto.id_pro,
-        projeto.tema,
-        area.nome_area AS area_nome,
-        aluno_principal.nome_alu AS aluno_principal,
-        projeto.aluno2,
-        projeto.aluno3,
-        projeto.aluno4,
-        projeto.aluno5,
+        projeto.id_pro, 
+        projeto.tema, 
+        area.nome_area AS area, 
+        aluno1.nome_alu AS aluno_principal, 
+        aluno2.nome_alu AS aluno2,
+        aluno3.nome_alu AS aluno3,
+        aluno4.nome_alu AS aluno4,
+        aluno5.nome_alu AS aluno5,
         projeto.orientador,
         projeto.inseriranexo,
-        eventos.nome_evento AS evento_nome
+        eventos.nome_evento AS evento
     FROM projeto
     LEFT JOIN area ON projeto.id_area = area.id_area
-    LEFT JOIN alunos AS aluno_principal ON projeto.id_alu = aluno_principal.id_alu
     LEFT JOIN eventos ON projeto.id_evento = eventos.id_evento
+    LEFT JOIN alunos AS aluno1 ON projeto.id_alu = aluno1.id_alu
+    LEFT JOIN alunos AS aluno2 ON projeto.aluno2 = aluno2.id_alu
+    LEFT JOIN alunos AS aluno3 ON projeto.aluno3 = aluno3.id_alu
+    LEFT JOIN alunos AS aluno4 ON projeto.aluno4 = aluno4.id_alu
+    LEFT JOIN alunos AS aluno5 ON projeto.aluno5 = aluno5.id_alu
 ";
+
+$result = $conn->query($sql);
+
+
 $result = $conn->query($sql);
 ?>
 
@@ -37,118 +44,115 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baixar Projetos</title>
-    <link rel="stylesheet" href="../css/lista_projetos.css">
+    <title>Projetos Cadastrados</title>
+    <link rel="stylesheet" href="../css/listar_projetos.css">
 </head>
 <body>
 
 <style>
-    .button-container {
-    text-align: left;
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     margin: 20px;
 }
 
-.btn-back {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #6c757d;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s;
+h2 {
+    text-align: center;
+    color: #333;
 }
 
-.btn-back:hover {
-    background-color: #545b62;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    margin: 20px auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background:#003366;
+    color: white;
+    text-transform: uppercase;
+}
+
+td {
+    background: #f9f9f9;
+}
+
+tr:nth-child(even) {
+    background: #f1f1f1;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 </style>
 
-<header>
-    <img src="./imagem/logo_branco.png" alt="Fatec Conecta">
-    
-</header>
-
-<!-- 🔙 Botão Voltar -->
-<div class="button-container">
-    <a href="admin_itens.php" class="btn btn-back">Voltar</a>
-</div>
-
-<h2 class="title-center">Projetos Cadastrados</h2>
-
-<!-- 🔎 Campo de busca -->
-<div class="search-container">
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar projeto..." onkeyup="buscarProjeto()">
-</div>
-
-
-<div class="table-container">
-    <table id="projetosTable" border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tema</th>
-                <th>Área</th>
-                <th>Aluno Principal</th>
-                <th>Aluno 2</th>
-                <th>Aluno 3</th>
-                <th>Aluno 4</th>
-                <th>Aluno 5</th>
-                <th>Orientador</th>
-                <th>Anexo</th>
-                <th>Evento</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result->num_rows > 0): ?>
+    <header>
+        <h2>Projetos Cadastrados</h2>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TEMA</th>
+                    <th>ÁREA</th>
+                    <th>ALUNO PRINCIPAL</th>
+                    <th>ALUNO 2</th>
+                    <th>ALUNO 3</th>
+                    <th>ALUNO 4</th>
+                    <th>ALUNO 5</th>
+                    <th>ORIENTADOR</th>
+                    <th>ANEXO</th>
+                    <th>EVENTO</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['id_pro']); ?></td>
                         <td><?= htmlspecialchars($row['tema']); ?></td>
-                        <td><?= htmlspecialchars($row['area_nome']); ?></td>
+                        <td><?= htmlspecialchars($row['area']); ?></td>
                         <td><?= htmlspecialchars($row['aluno_principal']); ?></td>
-                        <td><?= htmlspecialchars($row['aluno2']); ?></td>
-                        <td><?= htmlspecialchars($row['aluno3']); ?></td>
-                        <td><?= htmlspecialchars($row['aluno4']); ?></td>
-                        <td><?= htmlspecialchars($row['aluno5']); ?></td>
+                        <td><?= htmlspecialchars($row['aluno2'] ?? ''); ?></td>
+                        <td><?= htmlspecialchars($row['aluno3'] ?? ''); ?></td>
+                        <td><?= htmlspecialchars($row['aluno4'] ?? ''); ?></td>
+                        <td><?= htmlspecialchars($row['aluno5'] ?? ''); ?></td>
                         <td><?= htmlspecialchars($row['orientador']); ?></td>
                         <td>
-                        <a href="../<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
+                            <?php if (!empty($row['inseriranexo'])): ?>
+                                <a href="../<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
+                            <?php else: ?>
+                                Nenhum anexo
+                            <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($row['evento_nome']); ?></td>
+                        <td><?= htmlspecialchars($row['evento']); ?></td>
                     </tr>
                 <?php endwhile; ?>
-            <?php else: ?>
-                <tr><td colspan="11">Nenhum projeto encontrado</td></tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
 
-<a href="javascript:history.back()" class="btn">Voltar</a>
+        <div class="action-buttons">
+            <a href="admin_itens.php" class="btn btn-back">Voltar</a>
+        </div>
+    </main>
 
-<script>
-    function buscarProjeto() {
-        let input = document.getElementById("searchInput").value.toLowerCase();
-        let table = document.querySelector("#projetosTable tbody");
-        let rows = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < rows.length; i++) {
-            let nomeProjeto = rows[i].getElementsByTagName("td")[1]; // Coluna do tema
-            if (nomeProjeto) {
-                let texto = nomeProjeto.textContent || nomeProjeto.innerText;
-                if (texto.toLowerCase().includes(input)) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
+    
 </body>
 </html>
 

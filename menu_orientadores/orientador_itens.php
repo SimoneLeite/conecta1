@@ -104,6 +104,13 @@ $result = $stmt->get_result();
                                     <button type="submit">Salvar</button>
                                 </form>
                             </td>
+                            <td>
+                                <form method="POST" action="gerar_certificado.php">
+                                    <input type="hidden" name="id_projeto" value="<?= $row['id_pro']; ?>">
+                                    <button type="submit">Gerar Certificado</button>
+                                </form>
+                            </td>
+
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

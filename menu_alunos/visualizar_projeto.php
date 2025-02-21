@@ -7,9 +7,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] !== 'aluno') {
     exit;
 }
 
-// Exibe o ID do aluno logado para depuração
-//echo "ID do aluno logado: " . $_SESSION['user_id'];
-
 $nomeUsuario = $_SESSION['user_nome'];
 $idAlunoLogado = $_SESSION['user_id'];
 
@@ -24,7 +21,7 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Consulta para buscar os projetos do aluno logado
+// Consulta para buscar os projetos do aluno logado em qualquer posição
 $sql = "
     SELECT 
         projeto.id_pro,
@@ -32,15 +29,18 @@ $sql = "
         projeto.orientador,
         projeto.inseriranexo,
         eventos.nome_evento AS evento,
-        projeto.status -- Adicionando o campo status
+        projeto.status,
+        projeto.certificado
     FROM projeto
     LEFT JOIN eventos ON projeto.id_evento = eventos.id_evento
     WHERE projeto.id_alu = ?
+       OR projeto.aluno2 = ?
+       OR projeto.aluno3 = ?
+       OR projeto.aluno4 = ?
+       OR projeto.aluno5 = ?
 ";
-
-
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $idAlunoLogado);
+$stmt->bind_param("iiiii", $idAlunoLogado, $idAlunoLogado, $idAlunoLogado, $idAlunoLogado, $idAlunoLogado);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -98,7 +98,7 @@ $result = $stmt->get_result();
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
-                        <tr><td colspan="5">Nenhum projeto encontrado.</td></tr>
+                        <tr><td colspan="6">Nenhum projeto encontrado.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -113,3 +113,6 @@ $result = $stmt->get_result();
 <?php
 $conn->close();
 ?>
+
+
+
