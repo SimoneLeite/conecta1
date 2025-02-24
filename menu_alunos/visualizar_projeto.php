@@ -94,7 +94,15 @@ $result = $stmt->get_result();
                                         Nenhum anexo
                                     <?php endif; ?>
                                 </td>
-                                <td><?= htmlspecialchars($row['status']); ?></td>   
+                                <td><?= htmlspecialchars($row['status']); ?></td>
+                                <!-- NOVA COLUNA PARA O CERTIFICADO -->
+                                <td>
+                                    <?php if (!empty($row['certificado'])): ?>
+                                        <a href="<?= htmlspecialchars($row['certificado']); ?>" target="_blank" class="btn btn-primary">Ver Certificado</a>
+                                    <?php else: ?>
+                                        <span>Não disponível</span>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>

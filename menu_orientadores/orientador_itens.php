@@ -11,9 +11,9 @@ $nomeUsuario = $_SESSION['user_nome'];
 
 // Conexão com o banco de dados
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fatecconecta";
+$username   = "root";
+$password   = "";
+$dbname     = "fatecconecta";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -28,7 +28,8 @@ $sql = "
         projeto.tema AS titulo,
         eventos.nome_evento AS data_apresentacao,
         projeto.inseriranexo,
-        projeto.status
+        projeto.status,
+        projeto.certificado
     FROM projeto
     LEFT JOIN alunos ON projeto.id_alu = alunos.id_alu
     LEFT JOIN eventos ON projeto.id_evento = eventos.id_evento
@@ -76,6 +77,7 @@ $result = $stmt->get_result();
                         <th>Anexo</th>
                         <th>Status</th>
                         <th>Ação</th>
+                        <th>Certificado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,23 +96,34 @@ $result = $stmt->get_result();
                             </td>
                             <td><?= htmlspecialchars($row['status']); ?></td>
                             <td>
+                                <!-- Form para atualizar o status -->
                                 <form method="POST" action="atualizar_status.php">
                                     <input type="hidden" name="id_projeto" value="<?= $row['id_pro']; ?>">
                                     <select name="status">
-                                        <option value="Pendente" <?= ($row['status'] == 'Pendente') ? 'selected' : ''; ?>>Pendente</option>
-                                        <option value="Aprovado" <?= ($row['status'] == 'Aprovado') ? 'selected' : ''; ?>>Aprovado</option>
+                                        <option value="Pendente"  <?= ($row['status'] == 'Pendente') ? 'selected' : ''; ?>>Pendente</option>
+                                        <option value="Aprovado"  <?= ($row['status'] == 'Aprovado') ? 'selected' : ''; ?>>Aprovado</option>
                                         <option value="Reprovado" <?= ($row['status'] == 'Reprovado') ? 'selected' : ''; ?>>Reprovado</option>
                                     </select>
                                     <button type="submit">Salvar</button>
                                 </form>
                             </td>
                             <td>
-                                <form method="POST" action="gerar_certificado.php">
-                                    <input type="hidden" name="id_projeto" value="<?= $row['id_pro']; ?>">
-                                    <button type="submit">Gerar Certificado</button>
-                                </form>
+                                <!-- Link para gerar certificado via GET, abrindo em nova aba -->
+                                <a href="gerar_certificado.php?id_projeto=<?= $row['id_pro']; ?>" 
+                                   target="_blank" 
+                                   class="btn btn-success">
+                                   Gerar Certificado
+                                </a>
+                                
+                                <!-- Se o campo 'certificado' já estiver preenchido, pode exibir um link para visualizar -->
+                                <?php if (!empty($row['certificado'])): ?>
+                                    <br>
+                                    <a href="<?= htmlspecialchars($row['certificado']); ?>" 
+                                       target="_blank">
+                                       Ver Certificado
+                                    </a>
+                                <?php endif; ?>
                             </td>
-
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
