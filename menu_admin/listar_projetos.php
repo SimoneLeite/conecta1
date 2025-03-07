@@ -50,55 +50,116 @@ $result = $conn->query($sql);
 <body>
 
 <style>
-    body {
+    /* Estilização Global */
+body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 20px;
+    background-color: #eef1f5;
+    margin: 0;
+    padding: 20px;
 }
 
+/* Cabeçalho */
 h2 {
     text-align: center;
-    color: #333;
+    color: #003366;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
+/* Estilização da Tabela */
 table {
     width: 100%;
     border-collapse: collapse;
     background: #ffffff;
-    margin: 20px auto;
-    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background:#003366;
+/* Cabeçalho da Tabela */
+thead {
+    background-color:rgb(194, 26, 23);
     color: white;
     text-transform: uppercase;
 }
 
+thead th {
+    padding: 14px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Corpo da Tabela */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #d0e4ff;
+    transition: 0.3s;
+}
+
 td {
-    background: #f9f9f9;
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
 }
 
-tr:nth-child(even) {
-    background: #f1f1f1;
-}
-
-a {
+/* Links e Botões */
+.btn-download {
     color: #007bff;
+    font-weight: bold;
     text-decoration: none;
 }
 
-a:hover {
+.btn-download:hover {
+    color: #00509e;
     text-decoration: underline;
 }
+
+/* Botão Voltar */
+.btn-back {
+    display: block;
+    width: 120px;
+    margin: 20px auto;
+    padding: 12px;
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #00509e;
+}
+
+/* Mensagem quando não há anexo */
+.sem-anexo {
+    color: #777;
+    font-style: italic;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    thead th, td {
+        padding: 10px;
+    }
+
+    .btn-back {
+        width: 100px;
+        padding: 10px;
+    }
+}
+
 
 </style>
 

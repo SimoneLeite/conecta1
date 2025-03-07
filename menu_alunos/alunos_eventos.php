@@ -121,7 +121,7 @@ main {
         <img src="logo_branco.png" alt="Fatec Conecta Logo" class="logo">
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
+                <li><a href="/conecta/index.php">Início</a></li>
                 <li><a href="../menu_alunos/alunos_cadastro.php">Cadastro</a></li>
                 <li><a href="#">Eventos</a></li>
                 <li><a href="#">Contato</a></li>

@@ -27,7 +27,7 @@
                     <p>Garanta sua participação no evento acadêmico agora e não perca
                     <span>a oportunidade de expandir seus conhecimentos e trocar experiências!</span></p>
 
-                    <a href="./menu_alunos/alunos_cadastro.php">
+                    <a href="./menu_alunos/alunos_eventos.php">
                             <button>Inscreva-se!</button>
                     </a>
                 </div>

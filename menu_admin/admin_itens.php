@@ -52,7 +52,7 @@ $nomeUsuario = $_SESSION['user_nome'];
         <a class="botao" href="./menu_banca.php">Definir Banca</a>
         <a class="botao" href="../menu_admin/eventos_cadastrados.php">Eventos</a>
         <a class="botao" href="../menu_admin/instituicoes_cadastradas.php">Instituições</a>
-        <a class="botao" href="./menu_certificado.php">Gerar Certificado</a>
+        <a class="botao" href="../menu_admin/gerenciar_eveanterior.php">Eventos Anteriores</a>
         <a class="botao" href="../menu_admin/listar_orientadores.php">Orientadores</a>
     </div>
 </body>
