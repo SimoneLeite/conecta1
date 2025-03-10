@@ -89,11 +89,15 @@ $result = $stmt->get_result();
                                 <!-- NOVA COLUNA PARA O CERTIFICADO -->
                                 <td>
                                     <?php if (!empty($row['certificado'])): ?>
-                                        <a href="<?= htmlspecialchars($row['certificado']); ?>" target="_blank" class="btn btn-primary">Ver Certificado</a>
+                                        <!-- Sobe um nível (../) e depois acessa o valor de $row['certificado'] -->
+                                        <a href="../<?php echo htmlspecialchars($row['certificado']); ?>" target="_blank">
+                                            Ver Certificado
+                                        </a>
                                     <?php else: ?>
-                                        <span>Não disponível</span>
+                                        Nenhum Certificado
                                     <?php endif; ?>
                                 </td>
+
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>

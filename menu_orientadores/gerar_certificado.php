@@ -22,16 +22,16 @@ if ($conn->connect_error) {
     die("Falha na conexão com o banco de dados.");
 }
 
-// 1) Inclui a biblioteca FPDF, que está em conecta/fpdf/fpdf.php
+// Inclui a biblioteca FPDF (ajuste o caminho conforme sua pasta)
 require_once __DIR__ . '/../fpdf/fpdf.php';
 
-// 2) Verifica se o ID do projeto foi enviado
+// Verifica se o ID do projeto foi enviado
 if (!isset($_GET['id_projeto']) || empty($_GET['id_projeto'])) {
     die("ID do projeto não fornecido.");
 }
 $id_projeto = intval($_GET['id_projeto']);
 
-// 3) Consulta os dados do projeto (tema, orientador, evento, alunos)
+// Consulta os dados do projeto (tema, orientador, evento, alunos)
 $sql = "
     SELECT 
         p.tema,
@@ -75,29 +75,43 @@ $orientador     = $dados['orientador'];
 $evento         = $dados['nome_evento'];
 
 // Formata data (ex.: "10 de março de 2025")
-setlocale(LC_TIME, 'pt_BR.utf-8');
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8');
 date_default_timezone_set('America/Sao_Paulo');
 $data_atual = strftime('%d de %B de %Y');
 
-// 4) Cria o PDF
+// Campos de assinatura: nome e cargo
+//    - Valores padrão
+$assinaturaNomePadrao  = "Prof. Dr. Giuliano Pierre Estevam";
+$assinaturaCargoPadrao = "Diretor";
+
+//    - Se quiser permitir que venham via GET, por exemplo:
+//      gerar_certificado.php?id_projeto=5&nome_assinatura=Fulano&cargo_assinatura=Coordenador
+$assinaturaNome = isset($_GET['nome_assinatura']) && !empty($_GET['nome_assinatura'])
+    ? $_GET['nome_assinatura']
+    : $assinaturaNomePadrao;
+
+$assinaturaCargo = isset($_GET['cargo_assinatura']) && !empty($_GET['cargo_assinatura'])
+    ? $_GET['cargo_assinatura']
+    : $assinaturaCargoPadrao;
+
+// Cria o PDF
 $pdf = new FPDF('P', 'mm', 'A4');
 $pdf->AddPage();
 
-// 4.1) Insere as logos do topo (logo_certificado, logo_cps, lodo_governo) 
-// Ajuste X, Y, largura (mm)
+//  Inserir logos (ajuste posições se necessário)
 $pdf->Image(__DIR__ . '/../img/logo_certificado.png', 10, 10, 30);
 $pdf->Image(__DIR__ . '/../img/logo_cps.png', 75, 10, 30);
 $pdf->Image(__DIR__ . '/../img/lodo_governo.png', 140, 10, 30);
 
-// Deixa espaço após as imagens
-$pdf->Ln(40);
+// Reduz espaço se estiver “quebrando” página
+$pdf->Ln(30);
 
-// 4.2) Título
+//  Título
 $pdf->SetFont('Arial', 'B', 18);
 $pdf->Cell(0, 10, utf8_decode('CERTIFICADO'), 0, 1, 'C');
 $pdf->Ln(5);
 
-// 4.3) Texto principal
+//  Texto principal
 $pdf->SetFont('Arial', '', 12);
 $texto = "Certificamos que os(as) seguintes alunos(as): $nomes_alunos\n"
        . "sob orientação de $orientador, participaram do evento '$evento' "
@@ -107,35 +121,38 @@ $texto = "Certificamos que os(as) seguintes alunos(as): $nomes_alunos\n"
        . "Araçatuba, $data_atual.";
 
 $pdf->MultiCell(0, 6, utf8_decode($texto), 0, 'J');
-$pdf->Ln(20);
+$pdf->Ln(10);
 
-// 4.4) Assinatura
-$pdf->Image(__DIR__ . '/../img/logo_assinatura.png', 80, 180, 50); 
-// Ajuste X=80, Y=220, Larg=50mm (ou como preferir)
+// Assinatura
+// - Se a imagem da assinatura for grande, tente colocar em Y=180 ou 190 para caber
+$pdf->Image(__DIR__ . '/../img/logo_assinatura.png', 80, 180, 50);
 
-// Texto abaixo da assinatura (opcional)
-$pdf->SetXY(10, 270);
-$pdf->Cell(0, 6, utf8_decode('Prof. Dr. Giuliano Pierre Estevam'), 0, 1, 'C');
-$pdf->Cell(0, 6, utf8_decode('Diretor'), 0, 1, 'C');
+// Texto abaixo da assinatura
+// Ajuste a posição final para não quebrar a página
+$pdf->SetXY(10, 240);
+$pdf->SetFont('Arial', '', 12);
+$pdf->Cell(0, 6, utf8_decode($assinaturaNome), 0, 1, 'C');
+$pdf->Cell(0, 6, utf8_decode($assinaturaCargo), 0, 1, 'C');
 
-// 5) Salva o PDF em conecta/certificados
-$certificado_path = __DIR__ . '/../certificados/certificado_' . $id_projeto . '.pdf';
-$pdf->Output($certificado_path, 'F'); // 'F' = salva no servidor
+//  Salva o PDF em /certificados
+$certificado_path_abs = __DIR__ . '/../certificados/certificado_' . $id_projeto . '.pdf';
+$pdf->Output($certificado_path_abs, 'F');  // 'F' = salva no servidor
 
-// Como o caminho absoluto foi usado, mas se quiser salvar relativo no BD, use algo como:
-$certificado_relativo = 'certificados/certificado_' . $id_projeto . '.pdf';
+// Caminho relativo para salvar no banco (opcional)
+$certificado_path_rel = 'certificados/certificado_' . $id_projeto . '.pdf';
 
-// 6) Atualiza o campo "certificado" no banco
+// Atualiza o campo "certificado" no banco
 $sql_update = "UPDATE projeto SET certificado = ? WHERE id_pro = ?";
 $stmt2 = $conn->prepare($sql_update);
-$stmt2->bind_param("si", $certificado_relativo, $id_projeto);
+$stmt2->bind_param("si", $certificado_path_rel, $id_projeto);
 $stmt2->execute();
 
-// 7) Exibe o PDF no navegador
+// Exibe o PDF no navegador
 header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="' . basename($certificado_relativo) . '"');
-readfile(__DIR__ . '/../' . $certificado_relativo);
+header('Content-Disposition: inline; filename="' . basename($certificado_path_rel) . '"');
+readfile(__DIR__ . '/../' . $certificado_path_rel);
 
 $conn->close();
 exit;
 ?>
+
