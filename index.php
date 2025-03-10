@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Fatec Conecta</title>
-        <link rel="shortcut icon" href="./img/icon_branco.png" type="image/png" />
+        <link rel="shortcut icon" href="./img/icon_conecta_index.png" type="image/png" />
         <link rel="stylesheet" href="./css/index.css">
 
         <!-- Bootstrap icons -->
@@ -13,12 +13,10 @@
     </head>
 
     <body>
-        <header>
-            <!-- Menu de navegação fixo no topo que vai puxar em "_menu.php" -->
-            <div class="menuindex">
-                <?php require_once("./_menu.php"); ?>
-            </div>
-        </header>
+        
+        <?php
+        include('./_menu.php')
+        ?>
 
         <section class="hero-site">
             <div class="interface">
@@ -40,8 +38,8 @@
 
                     <div class="txt-itens"> <!-- 1° bloco para guardar texto -->
                         <h3><span>Troque</span><br> experiências</h3>
-                        <p>O conhecimento se fortalece quando compartilhado: Troque experiências,<br> 
-                           amplie sua rede de contatos e descubra novas perspectivas que podem<br> 
+                        <p>O conhecimento se fortalece quando compartilhado: Troque experiências,
+                           amplie sua rede de contatos e descubra novas perspectivas que podem
                            transformar sua trajetória acadêmica e profissional!</p>
 
                     <div class="img-itens">
@@ -52,15 +50,15 @@
 
                 <article class="itens-container"> <!-- Serão os blocos -->
 
-                    <div class="txt-itens"> <!-- 1° bloco para guardar texto -->
-                        <h3><span>Aprenda,</span><br> compartilhe e inspire!</h3>
-                        <p>Conecte-se com mentes brilhantes, troque experiências
-                           valiosas e faça parte de uma comunidade que impulsiona <br>
-                           o crescimento e a inovação!</p>
-
                     <div class="img-itens">
                         <img src="./imagem/img-2.png" alt="Estudantes">
                     </div>
+
+                    <div class="txt-itens"> <!-- 1° bloco para guardar texto -->
+                        <h3><span>Aprenda,</span><br> compartilhe e inspire!</h3>
+                        <p>Conecte-se com mentes brilhantes, troque experiências
+                           valiosas e faça parte de uma comunidade que impulsiona
+                           o crescimento e a inovação!</p>
                     
                 </article>
 
@@ -68,9 +66,9 @@
 
                     <div class="txt-itens"> <!-- 1° bloco para guardar texto -->
                         <h3><span>Do aprendizado</span><br> à pratica</h3>
-                        <p>Transforme teoria em ação, colocando em prática<br>
-                            tudo o que aprendeu e vendo seus conhecimentos<br> 
-                            ganharem vida em projetos reais que impactam<br> 
+                        <p>Transforme teoria em ação, colocando em prática
+                            tudo o que aprendeu e vendo seus conhecimentos
+                            ganharem vida em projetos reais que impactam
                             o mundo ao seu redor!</p>
 
                     <div class="img-itens">
@@ -122,7 +120,7 @@
                     <a href="#">Marketing</a>
                 </section>
 
-                <section class="botton-fotter">
+                <section class="botton-footer">
                     <p>Fatec Conecta 2025 &copy; Todos os direitos reservados</p>
                 </section>
             </div>

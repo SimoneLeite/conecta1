@@ -41,14 +41,14 @@ section.hero-site{
 
 .hero-site .txt-hero p{
     font-size: 18px;
-    font-weight: 290;
+    font-weight: 400;
     margin: 20px 0;
 }
 
 .hero-site .txt-hero p span{
     display: block;
     font-size: 18px;
-    font-weight: 290;
+    font-weight: 400;
 }
 
 .hero-site button{
@@ -61,7 +61,7 @@ section.vantagens{
     padding: 80px 0;
 }
 
-.txt-itens{
+.vantagens .itens-container{
     display: flex;  
     align-items: center;
     justify-content: space-between;

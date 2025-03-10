@@ -54,16 +54,6 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="../css/alunovisualizar_projeto.css">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <img src="../img/logo_fatec.png" alt="Fatec Conecta" class="logo">
-            <nav>
-                <a href="#">Início</a>
-                <a href="#">Eventos</a>
-                <a href="#">Contato</a>
-            </nav>
-        </div>
-    </header>
 
     <main>
         <h2>Bem-vindo(a), <?= htmlspecialchars($nomeUsuario); ?>!</h2>
@@ -77,6 +67,7 @@ $result = $stmt->get_result();
                         <th>Evento</th>
                         <th>Anexo</th>
                         <th>Status</th>
+                        <th>Certificado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,7 +80,7 @@ $result = $stmt->get_result();
                                 <td><?= htmlspecialchars($row['evento']); ?></td>
                                 <td>
                                     <?php if (!empty($row['inseriranexo'])): ?>
-                                        <a href="../<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
+                                        <a href="./uploads/<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
                                     <?php else: ?>
                                         Nenhum anexo
                                     <?php endif; ?>

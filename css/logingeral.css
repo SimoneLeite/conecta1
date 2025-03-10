@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     box-sizing: border-box;
@@ -10,59 +11,26 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f8f8f8;
 }
 
-nav {
-    width: 100%;
-    background-color: #50BFA4;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
 .main-form {
-    width: 350px;
+    width: 400px;
+    height: 75vh;
     padding: 40px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-top: 60px; /* Espaço para o menu fixo */
 }
 
-.logo {
-    background-color: #50BFA4;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    position: relative;
-}
-
-.logo::before {
-    content: "🔍"; /* Utilize um ícone de busca como exemplo */
-    color: white;
-    font-size: 24px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Tamanho da logo dentro do formulário */
+.logo .img {
+    width: 20%;
+    align-items: center;
+    justify-content: center;
 }
 
 input[type="text"],
@@ -72,16 +40,16 @@ input[type="password"] {
     margin: 10px 0;
     font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #e7e4df;
-    color: #838383;
+    color: #505050;
 }
 
 .remember-me {
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: #838383;
+    color: #505050;
     margin-bottom: 20px;
 }
 
@@ -89,21 +57,23 @@ input[type="password"] {
     margin-right: 10px;
 }
 
+
+/* Button "Entrar" */
 button[type="submit"] {
     width: 100%;
     padding: 15px;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #50BFA4;
+    background-color: #ff6363;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #58CCB0;
+    background-color: #fd8080;
 }
 
 .forgot-password {
@@ -119,21 +89,23 @@ button[type="submit"]:hover {
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    color: #838383;
+    color: #505050;
 }
 
 .signup-section .sign-up {
     font-weight: bold;
-    border: 1px solid #3DA087;
+    border: 1px solid #ff6363;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: 5px 20px;
     margin-left: 10px;
-    color: #3DA087;
+    color: #ff6363;
     text-decoration: none;
     transition: all 0.3s ease;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .signup-section .sign-up:hover {
-    background-color: #3DA087;
-    color: #fff;
+    background-color: #ff6363;
+    color: #ffffff;
 }

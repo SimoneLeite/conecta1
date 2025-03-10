@@ -21,6 +21,7 @@ header{
     position: fixed;
     top: 0;
     left: 0;
+    transition: 0.5s;
 }
 
 header .interface{
@@ -33,6 +34,44 @@ header .logo img{
     max-width: 100px;
     padding-top: 15px;
 }
+
+/* Estilo do menu dinâmico */
+
+header .logo img.logo-preta{
+    display: none;
+}
+
+header.rolar{
+    background-color: #ffffff;
+    padding: 17px 0;
+    box-shadow: 0 0 8px #0000003d;
+}
+
+header.rolar .menu-desktop nav ul li a{
+    color: black;
+}
+
+header.rolar .btn-login button{
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+header.rolar .btn-contato button:hover{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+header.rolar .logo .logo-branca{
+    display: none;
+}
+
+header.rolar .logo .logo-preta{
+    display: block;
+    margin-top: -12px;
+    width: 92px;
+}
+
+/* ----------------------- */
 
 header .menu-desktop nav ul{
     list-style-type: none;
@@ -76,5 +115,5 @@ header .btn-login button:hover, .hero-site button:hover{
 }
 
 .hero-site button:hover{
-    transform: scale(1.1);
+    transform: scale(1.1);
 }

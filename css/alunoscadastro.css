@@ -1,144 +1,156 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
     padding: 0;
-    background-color: #f9f9f9;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
-    padding: 20px;
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #ffffff4d;
+    padding-top: 5%;
+    background-image: url(../imagem/back_cadastro.png);
+    background-position: center; /* Centraliza o background */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* Aonde fica tudo, a imagem e o formulário ao lado */
+.container{
+    width: 65%;
+    height: 80vh;
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .212);
+    border-radius: 10px;
+}
+
+
+/* "DIV" da imagem */
+.form-image{
+    min-width: 300px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fde3a7d7;
+    border-radius: 10px;
+}
+
+.form-image img{
+    width: 200%; /* Faz a imagem ocupar corretamente o espaço */
+    max-width: 500px;
+}
+
+/* Formulário ao lado da imagem */
+.form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 3rem;
+    border-radius: 12px;
+}
+
+.title{
+    letter-spacing: -1px;
+    color: #444444;
+}
+
+.form-header{
+    margin-bottom: 3rem;
     display: flex;
     justify-content: space-between;
+}
+
+.login-button{
+    display: flex;
     align-items: center;
 }
 
-header img {
-    width: 150px;
-}
-
-header nav {
-    display: flex;
-    gap: 20px;
-}
-
-header nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-.welcome {
-    text-align: center;
-    font-size: 1.5em;
-    margin: 20px 0;
-}
-
-.search-container {
-    margin: 20px auto;
-    text-align: center;
-}
-
-.search-input {
-    width: 50%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.table-container {
-    width: 90%;
-    margin: 20px auto;
-    overflow-x: auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background: #f4f4f4;
-}
-
-tr:hover {
-    background: #f9f9f9;
-}
-
-.btn {
-    padding: 5px 10px;
-    font-size: 14px;
+.login-button button{
     border: none;
+    background-color: #ff6363;
+    padding: 0.4rem 1rem;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.login-button button:hover{
+    background-color: #f88080;
+}
+
+.login-button button a{
+    text-decoration: none;
+    font-weight: 500;
     color: #fff;
 }
 
-.btn-edit {
-    background-color: #007bff;
-}
-
-.btn-delete {
-    background-color: #dc3545;
-}
-
-form {
-    width: 50%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-form label {
+.form-header h1::after{
+    content: '';
     display: block;
-    font-weight: bold;
-    margin-top: 10px;
+    width: 5rem;
+    height: 0.3rem;
+    background-color: #ff6363;
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 10px;
 }
 
-form input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.input-group{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem 0;
 }
 
-form button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
+.input-box{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.1rem;
+    width: 48%;
+}
+
+.input-box input{
+    margin: 0.6rem 0;
+    padding: 0.8rem 1.2rem;
     border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 6px #c5c5c5;
+}
+
+.input-box input:hover{
+    background-color: #f0f0f075;
+}
+
+.input-box input:focus-visible{
+    outline: 1px solid #ff6363;
+}
+
+.continue-button button{
+    width: 100%;
+    margin-top: 2.5rem;
+    border: none;
+    background-color: #ff6363;
+    padding: 0.62rem;
     border-radius: 5px;
     cursor: pointer;
 }
 
-form button:hover {
-    background-color: #0056b3;
+.continue-button:hover{
+    background-color: #ff6363;
 }
 
-form a {
-    margin-left: 10px;
+.continue-button:hover a{ 
     text-decoration: none;
-    color: #333;
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: #fff;
 }
-
-form a:hover {
-    text-decoration: underline;
-}
-
-

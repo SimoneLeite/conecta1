@@ -197,7 +197,7 @@ td {
                         <td><?= htmlspecialchars($row['orientador']); ?></td>
                         <td>
                             <?php if (!empty($row['inseriranexo'])): ?>
-                                <a href="../<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
+                                <a href="../menu_alunos/uploads/<?= htmlspecialchars($row['inseriranexo']); ?>" download>Baixar</a>
                             <?php else: ?>
                                 Nenhum anexo
                             <?php endif; ?>
