@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] !== 'aluno') {
         <div class="header-container">
             <img src="logo.png" alt="Fatec Conecta" class="logo">
             <nav>
-                <a href="#">Início</a>
+                <a href="/conecta/index.php">Início</a>
                 <a href="#">Eventos</a>
                 <a href="#">Contato</a>
             </nav>

@@ -108,6 +108,7 @@ $conn->close();
 
         <button type="submit" class="btn">Cadastrar</button>
         <a href="avaliadores_cadastrados.php" class="btn">Ver Avaliadores</a>
+        
     </form>
 </body>
 </html>

@@ -55,6 +55,10 @@ $nomeUsuario = $_SESSION['user_nome'];
         <a class="botao" href="../menu_admin/gerenciar_eveanterior.php">Eventos Anteriores</a>
         <a class="botao" href="../menu_admin/listar_orientadores.php">Orientadores</a>
     </div>
+
+    <form action="logout.php" method="POST">
+            <button type="submit" class="btn-logout">Logout</button>
+    </form>
 </body>
 </html>
 

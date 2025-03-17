@@ -1,4 +1,4 @@
-<<?php
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -10,18 +10,19 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
-    $sql = "UPDATE eventos SET status='ativo' WHERE id_evento=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
+// Recebe o ID do evento via GET
+$id = $_GET['id'];
 
-    if ($stmt->execute()) {
-        echo "<script>alert('Evento ativado com sucesso!'); window.location.href='eventos_admin.php';</script>";
-    } else {
-        echo "Erro ao ativar evento: " . $stmt->error;
-    }
+// Atualiza o status do evento para 'ativo'
+$sql = "UPDATE eventos SET status='ativo' WHERE id_evento = $id";
+if ($conn->query($sql) === TRUE) {
+    // Redireciona de volta para a página de eventos cadastrados
+    header("Location: eventos_cadastrados.php");
+    exit;
+} else {
+    echo "Erro: " . $conn->error;
 }
 
 $conn->close();
 ?>
+

@@ -1,5 +1,5 @@
 <?php
-// gerenciar_eveanterior.php
+// gerenciar_eveanterior.php (dentro de menu_admin)
 
 $servername = "localhost";
 $username   = "root";
@@ -21,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imagemNome = "";
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
         $nomeArquivoImg = basename($_FILES['imagem']['name']);
-        $caminhoImg     = "imagens/" . $nomeArquivoImg;
+        // Como gerenciar_eveanterior.php está em menu_admin e as pastas estão em conecta, usamos "../"
+        $caminhoImg     = "../imagens/" . $nomeArquivoImg;
         if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImg)) {
             $imagemNome = $caminhoImg;
         }
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $videoNome = "";
     if (isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
         $nomeArquivoVideo = basename($_FILES['video']['name']);
-        $caminhoVideo     = "videos/" . $nomeArquivoVideo;
+        $caminhoVideo     = "../videos/" . $nomeArquivoVideo;
         if (move_uploaded_file($_FILES['video']['tmp_name'], $caminhoVideo)) {
             $videoNome = $caminhoVideo;
         }
@@ -119,6 +120,7 @@ $result   = $conexao->query($sql_list);
       border-color: #bd2130;
     }
   </style>
+  
 </head>
 <body>
 <div class="container mt-5">

@@ -26,94 +26,93 @@ $resultEventosAtivos = $conn->query($sqlEventosAtivos);
 
 <style>
     /* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
 
-/* Estilo do container principal */
-main {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-}
+    /* Estilo do container principal */
+    main {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+    }
 
-/* Container dos eventos */
-.eventos-lista {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
+    /* Container dos eventos */
+    .eventos-lista {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
 
-/* Card do evento */
-.evento {
-    background: #ff5959;
-    color: white;
-    border-radius: 15px;
-    padding: 15px;
-    width: 350px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-}
+    /* Card do evento */
+    .evento {
+        background: #ff5959;
+        color: white;
+        border-radius: 15px;
+        padding: 15px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+    }
 
-.evento:hover {
-    transform: scale(1.05);
-}
+    .evento:hover {
+        transform: scale(1.05);
+    }
 
-/* Ajuste da imagem dentro do card */
-.evento-imagem {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
+    /* Ajuste da imagem dentro do card */
+    .evento-imagem {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 
-/* Título do evento */
-.evento-info h2 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
-}
+    /* Título do evento */
+    .evento-info h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
 
-/* Texto da descrição */
-.evento-info p {
-    font-size: 14px;
-    margin-top: 8px;
-}
+    /* Texto da descrição */
+    .evento-info p {
+        font-size: 14px;
+        margin-top: 8px;
+    }
 
-/* Datas e local */
-.evento-info .data {
-    font-size: 13px;
-    font-weight: bold;
-    display: block;
-    margin: 10px 0;
-}
+    /* Datas e local */
+    .evento-info .data {
+        font-size: 13px;
+        font-weight: bold;
+        display: block;
+        margin: 10px 0;
+    }
 
-/* Botão de inscrição */
-.btn-inscreva-se {
-    display: inline-block;
-    background-color: #28a745;
-    color: white;
-    padding: 8px 15px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
+    /* Botão de inscrição */
+    .btn-inscreva-se {
+        display: inline-block;
+        background-color: #28a745;
+        color: white;
+        padding: 8px 15px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background 0.3s;
+    }
 
-.btn-inscreva-se:hover {
-    background-color: #218838;
-}
-
+    .btn-inscreva-se:hover {
+        background-color: #218838;
+    }
 </style>
 
 <body>
@@ -135,7 +134,10 @@ main {
         <section class="eventos-lista">
             <?php while ($evento = $resultEventosAtivos->fetch_assoc()): ?>
                 <div class="evento">
-                    <img src="<?= htmlspecialchars($evento['imagem']); ?>" alt="Evento <?= htmlspecialchars($evento['nome_evento']); ?>" class="evento-imagem">
+                    <!-- Adicione a classe 'evento-imagem' abaixo: -->
+                    <img src="../menu_admin/<?= htmlspecialchars($evento['imagem']); ?>"
+                         alt="Evento <?= htmlspecialchars($evento['nome_evento']); ?>"
+                         class="evento-imagem">
                     <div class="evento-info">
                         <h2>Evento <span><?= htmlspecialchars($evento['nome_evento']); ?></span></h2>
                         <p><?= htmlspecialchars($evento['descricao']); ?></p>
@@ -153,6 +155,7 @@ main {
 </html>
 
 <?php $conn->close(); ?>
+
 
 
 

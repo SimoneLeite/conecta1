@@ -14,7 +14,6 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM eventos";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -25,7 +24,6 @@ $result = $conn->query($sql);
 </head>
 <body>
     <h2>Lista de Eventos Cadastrados</h2>
-
     <table border="1" cellpadding="10">
         <thead>
             <tr>
@@ -54,25 +52,21 @@ $result = $conn->query($sql);
                     <td>
                         <a href="editar_evento.php?id=<?= $row['id_evento']; ?>" class="btn">Editar</a>
                         <a href="excluir_evento.php?id=<?= $row['id_evento']; ?>" class="btn" onclick="return confirm('Deseja realmente excluir este evento?');">Excluir</a>
-                        
                         <?php if ($row['status'] == 'ativo'): ?>
                             <a href="desativar_evento.php?id=<?= $row['id_evento']; ?>" class="btn btn-warning">Desativar</a>
                         <?php else: ?>
                             <a href="ativar_evento.php?id=<?= $row['id_evento']; ?>" class="btn btn-success">Ativar</a>
                         <?php endif; ?>
-
                     </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
-
     <br>
     <a href="cadastrar_evento.php" class="btn">Cadastrar Novo Evento</a>
     <a href="javascript:history.back()" class="back-btn">Voltar</a>
-
 </body>
 </html>
-
 <?php $conn->close(); ?>
+
 
