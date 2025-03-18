@@ -1,56 +1,83 @@
 <?php
-// gerenciar_eveanterior.php (dentro de menu_admin)
+// gerenciar_eveanterior.php (dentro de conecta/menu_admin)
 
 $servername = "localhost";
 $username   = "root";
 $password   = "";
 $dbname     = "fatecconecta";
 
+// Conexão com o banco
 $conexao = new mysqli($servername, $username, $password, $dbname);
 if ($conexao->connect_error) {
     die("Falha na conexão: " . $conexao->connect_error);
 }
 
-// Se o formulário foi enviado
+// Se o formulário for enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titulo       = $_POST['titulo'];
-    $descricao    = $_POST['descricao'];
-    $dataEvento   = $_POST['data_evento'];
+    $titulo     = $_POST['titulo'];
+    $descricao  = $_POST['descricao'];
+    $dataEvento = $_POST['data_evento'];
 
-    // Upload da imagem
-    $imagemNome = "";
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
-        $nomeArquivoImg = basename($_FILES['imagem']['name']);
-        // Como gerenciar_eveanterior.php está em menu_admin e as pastas estão em conecta, usamos "../"
-        $caminhoImg     = "../imagens/" . $nomeArquivoImg;
-        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImg)) {
-            $imagemNome = $caminhoImg;
-        }
-    }
-
-    // Upload do vídeo
+    // 1) Upload do vídeo (opcional)
     $videoNome = "";
     if (isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
-        $nomeArquivoVideo = basename($_FILES['video']['name']);
-        $caminhoVideo     = "../videos/" . $nomeArquivoVideo;
-        if (move_uploaded_file($_FILES['video']['tmp_name'], $caminhoVideo)) {
-            $videoNome = $caminhoVideo;
+        $nomeArquivoVideo   = basename($_FILES['video']['name']);
+        // Caminho salvo no banco (sem "../")
+        $caminhoBancoVideo  = "videos/" . $nomeArquivoVideo;
+        // Caminho físico real (precisa de "../" porque estamos em menu_admin)
+        $caminhoFisicoVideo = "../" . $caminhoBancoVideo;
+
+        if (move_uploaded_file($_FILES['video']['tmp_name'], $caminhoFisicoVideo)) {
+            $videoNome = $caminhoBancoVideo;
+        } else {
+            // Debug de erro
+            echo "Falha ao mover o vídeo. Código de erro: " . $_FILES['video']['error'];
         }
     }
 
-    // Insere no banco
-    $sql = "INSERT INTO eventos_anteriores (titulo, descricao, imagem, data_evento, video)
-            VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("sssss", $titulo, $descricao, $imagemNome, $dataEvento, $videoNome);
-    $stmt->execute();
-    $stmt->close();
+    // 2) Inserir o evento na tabela principal
+    $sqlEvento = "INSERT INTO eventos_anteriores (titulo, descricao, data_evento, video)
+                  VALUES (?, ?, ?, ?)";
+    $stmtEvento = $conexao->prepare($sqlEvento);
+    $stmtEvento->bind_param("ssss", $titulo, $descricao, $dataEvento, $videoNome);
+    $stmtEvento->execute();
 
+    // Pegar o ID do evento recém-criado
+    $eventoId = $stmtEvento->insert_id;
+    $stmtEvento->close();
+
+    // 3) Upload de múltiplas imagens
+    if (isset($_FILES['imagens']) && !empty($_FILES['imagens']['name'][0])) {
+        foreach ($_FILES['imagens']['tmp_name'] as $i => $tmpName) {
+            if ($_FILES['imagens']['error'][$i] === 0) {
+                $nomeArquivoImg   = basename($_FILES['imagens']['name'][$i]);
+                // Caminho salvo no banco (sem "../")
+                $caminhoBancoImg  = "imagem/" . $nomeArquivoImg;
+                // Caminho físico real (com "../")
+                $caminhoFisicoImg = "../" . $caminhoBancoImg;
+
+                if (move_uploaded_file($tmpName, $caminhoFisicoImg)) {
+                    // Inserir na tabela de imagens
+                    $sqlImg = "INSERT INTO eventos_anteriores_imagens (evento_id, imagem)
+                               VALUES (?, ?)";
+                    $stmtImg = $conexao->prepare($sqlImg);
+                    $stmtImg->bind_param("is", $eventoId, $caminhoBancoImg);
+                    $stmtImg->execute();
+                    $stmtImg->close();
+                } else {
+                    // Debug de erro de imagem
+                    echo "Falha ao mover a imagem. Código de erro: " . $_FILES['imagens']['error'][$i];
+                }
+            }
+        }
+    }
+
+    // Redirecionar de volta
     header("Location: gerenciar_eveanterior.php");
     exit;
 }
 
-// Listagem
+// Consulta simples dos eventos (opcional) para listar na mesma página
 $sql_list = "SELECT * FROM eventos_anteriores ORDER BY id DESC";
 $result   = $conexao->query($sql_list);
 ?>
@@ -61,11 +88,9 @@ $result   = $conexao->query($sql_list);
   <title>Gerenciar Eventos Anteriores</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-  <!-- Estilos Personalizados (exemplo) -->
   <style>
     body {
-      background-color: #f8f9fa; /* Cor de fundo suave */
+      background-color: #f8f9fa;
     }
     .card-form {
       background-color: #fff;
@@ -74,53 +99,12 @@ $result   = $conexao->query($sql_list);
       padding: 20px;
       margin-bottom: 30px;
     }
-    .table thead {
-      background-color: #343a40;
-      color: #fff;
-    }
-    .table tbody tr:hover {
-      background-color: #f2f2f2;
-    }
-    .thumb {
-      width: 100px;
-      height: auto;
-    }
-    video.thumb {
-      max-width: 100px;
-    }
     .header-title {
       font-size: 1.8rem;
       font-weight: 600;
       margin-bottom: 20px;
     }
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #004085;
-    }
-    .btn-edit {
-      background-color: #ffc107;
-      border-color: #ffc107;
-      color: #212529;
-    }
-    .btn-edit:hover {
-      background-color: #e0a800;
-      border-color: #d39e00;
-    }
-    .btn-delete {
-      background-color: #dc3545;
-      border-color: #dc3545;
-      color: #fff;
-    }
-    .btn-delete:hover {
-      background-color: #c82333;
-      border-color: #bd2130;
-    }
   </style>
-  
 </head>
 <body>
 <div class="container mt-5">
@@ -128,106 +112,85 @@ $result   = $conexao->query($sql_list);
   <!-- Título e botão Voltar -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="header-title m-0">Gerenciar Eventos Anteriores</h1>
-    <!-- Botão Voltar -->
     <a href="admin_itens.php" class="btn btn-secondary">Voltar</a>
   </div>
 
-  <!-- Cartão para o formulário -->
+  <!-- Formulário de cadastro -->
   <div class="card-form">
     <form action="gerenciar_eveanterior.php" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label for="titulo">Título do Evento:</label>
         <input type="text" class="form-control" id="titulo" name="titulo" required>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label for="descricao">Descrição do Evento:</label>
         <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label for="data_evento">Data do Evento:</label>
         <input type="date" class="form-control" id="data_evento" name="data_evento" required>
       </div>
-      <div class="form-group">
-        <label for="imagem">Selecionar Imagem:</label>
-        <input type="file" class="form-control-file" id="imagem" name="imagem" accept="image/*">
-      </div>
-      <div class="form-group">
-        <label for="video">Selecionar Vídeo (ou outro arquivo):</label>
+      <div class="form-group mb-3">
+        <label for="video">Selecionar Vídeo (opcional):</label>
         <input type="file" class="form-control-file" id="video" name="video" accept="video/*">
+      </div>
+      <div class="form-group mb-3">
+        <label for="imagens">Selecionar Imagens (múltiplas):</label>
+        <input type="file" class="form-control-file" id="imagens" name="imagens[]" accept="image/*" multiple>
       </div>
       <button type="submit" class="btn btn-primary">Cadastrar Evento</button>
     </form>
   </div>
 
-  <!-- Tabela de eventos -->
+  <!-- Tabela de eventos (opcional) -->
   <h2 class="mb-3">Eventos Cadastrados</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Descrição</th>
-        <th>Data</th>
-        <th>Imagem</th>
-        <th>Vídeo</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if ($result && $result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
+  <?php if ($result && $result->num_rows > 0): ?>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Data</th>
+          <th>Vídeo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
           <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo htmlspecialchars($row['titulo']); ?></td>
-            <td><?php echo htmlspecialchars($row['descricao']); ?></td>
-            <td>
-              <?php 
-                if (!empty($row['data_evento'])) {
-                  echo date("d/m/Y", strtotime($row['data_evento']));
-                }
-              ?>
-            </td>
-            <td>
-              <?php if (!empty($row['imagem'])): ?>
-                <img src="<?php echo htmlspecialchars($row['imagem']); ?>" class="thumb" alt="Imagem do evento">
-              <?php endif; ?>
-            </td>
+            <td><?= $row['id']; ?></td>
+            <td><?= htmlspecialchars($row['titulo']); ?></td>
+            <td><?= date("d/m/Y", strtotime($row['data_evento'])); ?></td>
             <td>
               <?php if (!empty($row['video'])): ?>
-                <video class="thumb" controls>
-                  <source src="<?php echo htmlspecialchars($row['video']); ?>" type="video/mp4">
-                  Seu navegador não suporta vídeos.
+                <video width="120" controls>
+                  <source src="<?= htmlspecialchars($row['video']); ?>" type="video/mp4">
                 </video>
               <?php endif; ?>
             </td>
             <td>
-              <!-- Ajuste os links de editar/excluir conforme seu projeto -->
-              <a href="editar_eveanterior.php?id=<?php echo $row['id']; ?>" class="btn btn-edit btn-sm">Editar</a>
-              <a href="excluir_eveanterior.php?id=<?php echo $row['id']; ?>"
-                 class="btn btn-delete btn-sm"
-                 onclick="return confirm('Deseja realmente excluir este evento?')">
+              <a href="editar_eveanterior.php?id=<?= $row['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+              <a href="excluir_eveanterior.php?id=<?= $row['id']; ?>" class="btn btn-danger btn-sm"
+                 onclick="return confirm('Deseja realmente excluir este evento?');">
                 Excluir
               </a>
             </td>
           </tr>
         <?php endwhile; ?>
-      <?php else: ?>
-        <tr>
-          <td colspan="7">Nenhum evento cadastrado.</td>
-        </tr>
-      <?php endif; ?>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  <?php else: ?>
+    <p>Nenhum evento cadastrado.</p>
+  <?php endif; ?>
 </div>
 
+<!-- Bootstrap JS (opcional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
 <?php
 $conexao->close();
 ?>
 
-<!-- Bootstrap JS (opcional) -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
-</html>
+
 
