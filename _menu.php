@@ -40,7 +40,7 @@
                         <ul> <!-- Tag semântica de links -->
                             <li><a href="./index.php">Início</a> <!-- "li" Listar os itens da lista -->
                             <li><a href="menu_alunos/alunos_cadastro.php">Cadastro</a>
-                            <li><a href="./menu_alunos/alunos_eventos.php">Eventos</a> 
+                            <li><a href="./eventos_anteriores.php">Eventos</a> 
                             <li><a href="#">Contato</a> 
                         </ul>
                     </nav>

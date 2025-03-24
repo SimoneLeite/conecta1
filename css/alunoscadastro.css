@@ -1,156 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
-body{
-    width: 100%;
+body {
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     background: #ffffff4d;
-    padding-top: 5%;
     background-image: url(../imagem/back_cadastro.png);
-    background-position: center; /* Centraliza o background */
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden; /* Evita barras de rolagem desnecessárias */
+    padding: 0; /* Remove o espaçamento extra */
 }
 
-
-/* Aonde fica tudo, a imagem e o formulário ao lado */
-.container{
-    width: 65%;
-    height: 80vh;
+/* Container principal */
+.container {
+    width: 70vw;  /* Define um tamanho fixo relativo à tela */
+    max-width: 1300px;; /* Ainda mantém um limite */
+    min-width: 800px; /* Evita que fique muito pequeno */
+    height: auto; /* Ajusta conforme o conteúdo */
     display: flex;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, .212);
+    flex-wrap: wrap;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    background: #fff;
 }
 
-
-/* "DIV" da imagem */
-.form-image{
-    min-width: 300px;
-    width: 50%;
+/* Ajuste para a parte da imagem, outro "container" ao lado*/
+.form-image {
+    flex: 1.5;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #fde3a7d7;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden; /* Garante que nada saia da div */
 }
 
-.form-image img{
-    width: 200%; /* Faz a imagem ocupar corretamente o espaço */
-    max-width: 500px;
+.form-image img {
+    width: 100%; /* Faz a imagem ocupar toda a largura da div */
+    height: 100%; /* Faz a imagem ocupar toda a altura da div */
+    object-fit: cover; /* Ajusta a imagem para cobrir toda a div sem distorção */
 }
 
-/* Formulário ao lado da imagem */
-.form{
-    width: 100%;
+/* Formulário */
+.form {
+    flex: 1.5;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    background-color: #fff;
-    padding: 3rem;
-    border-radius: 12px;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 0 10px 10px 0;
 }
 
-.title{
+.title {
     letter-spacing: -1px;
-    color: #444444;
+    color: #444;
 }
 
-.form-header{
-    margin-bottom: 3rem;
+.form-header {
     display: flex;
     justify-content: space-between;
-}
-
-.login-button{
-    display: flex;
     align-items: center;
+    margin-bottom: 2rem;
 }
 
-.login-button button{
+.login-button button {
     border: none;
-    background-color: #ff6363;
-    padding: 0.4rem 1rem;
+    background-color: #ac2727;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.login-button button:hover{
-    background-color: #f88080;
+.login-button button:hover {
+    background-color: #e95050;
 }
 
-.login-button button a{
+.login-button button a {
     text-decoration: none;
-    font-weight: 500;
     color: #fff;
+    font-weight: 500;
 }
 
-.form-header h1::after{
-    content: '';
-    display: block;
-    width: 5rem;
-    height: 0.3rem;
-    background-color: #ff6363;
-    margin: 0 auto;
-    position: absolute;
-    border-radius: 10px;
-}
-
-.input-group{
+.input-group {
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     justify-content: space-between;
-    padding: 1rem 0;
 }
 
-.input-box{
+.input-box {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.1rem;
-    width: 48%;
+    width: calc(50% - 10px);
 }
 
-.input-box input{
-    margin: 0.6rem 0;
-    padding: 0.8rem 1.2rem;
-    border: none;
+.input-box label {
+    font-weight: 500;
+}
+
+.input-box input, .input-box select {
+    margin-top: 5px;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 1px 1px 6px #c5c5c5;
+    box-shadow: 1px 1px 6px rgba(197, 197, 197, 0.5);
+    width: 100%;
 }
 
-.input-box input:hover{
+.input-box input:hover,
+.input-box select:hover {
     background-color: #f0f0f075;
 }
 
-.input-box input:focus-visible{
-    outline: 1px solid #ff6363;
+.input-box input:focus-visible,
+.input-box select:focus-visible {
+    outline: 1px solid #ac2727;
 }
 
-.continue-button button{
-    width: 100%;
-    margin-top: 2.5rem;
+/* Botões */
+.button {
+    display: flex;
+    gap: 10px; /* Adiciona espaçamento entre os botões */
+    margin-top: 1.5rem;
+    width: 100%; /* Garante que os botões ocupem toda a largura */
+}
+
+.button input {
+    flex: 1; /* Faz com que os botões tenham tamanhos iguais */
+    padding: 0.8rem 1.2rem;
     border: none;
-    background-color: #ff6363;
-    padding: 0.62rem;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.continue-button:hover{
-    background-color: #ff6363;
-}
-
-.continue-button:hover a{ 
-    text-decoration: none;
-    font-size: 0.93rem;
     font-weight: 500;
-    color: #fff;
+    color: #fff;
+    min-width: 120px; /* Define um tamanho mínimo */
+    text-align: center;
+}
+
+.button input[type="button"] {
+    background-color: #4d4d4d;
+}
+
+.button input[type="submit"] {
+    background-color: #ac2727;
+}
+
+.button input:hover {
+    opacity: 0.8;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form {
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .input-box {
+        width: 100%;
 }

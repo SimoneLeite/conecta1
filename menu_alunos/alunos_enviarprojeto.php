@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-    <img src="./imagem/logo_branco.png" alt="Fatec Conecta">
+    <img src="../imagem/logo_preto_menor.png" alt="Fatec Conecta">
     </div>
      <!-- Botão Voltar -->
      <div class="button-container">

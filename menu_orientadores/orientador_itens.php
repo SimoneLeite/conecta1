@@ -108,20 +108,21 @@ $result = $stmt->get_result();
                                 </form>
                             </td>
                             <td>
-                                <!-- Link para gerar certificado via GET, abrindo em nova aba -->
-                                <a href="gerar_certificado.php?id_projeto=<?= $row['id_pro']; ?>" 
-                                   target="_blank" 
-                                   class="btn btn-success">
-                                   Gerar Certificado
-                                </a>
-                                
-                                <!-- Se o campo 'certificado' já estiver preenchido, pode exibir um link para visualizar -->
-                                <?php if (!empty($row['certificado'])): ?>
-                                    <br>
-                                    <a href="<?= htmlspecialchars($row['certificado']); ?>" 
-                                       target="_blank">
-                                       Ver Certificado
+                                <?php if($row['status'] === 'Aprovado'): ?>
+                                    <a href="gerar_certificado.php?id_projeto=<?= $row['id_pro']; ?>" 
+                                       target="_blank" 
+                                       class="btn btn-success">
+                                       Gerar Certificado
                                     </a>
+                                    <!-- Se o certificado já foi gerado, exibe link para visualização -->
+                                    <?php if (!empty($row['certificado'])): ?>
+                                        <br>
+                                        <a href="<?= htmlspecialchars($row['certificado']); ?>" target="_blank">
+                                            Ver Certificado
+                                        </a>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <span style="color: red;">Projeto não aprovado</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -139,5 +140,6 @@ $result = $stmt->get_result();
 <?php
 $conn->close();
 ?>
+
 
 
